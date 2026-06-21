@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curiosity Lab Starter Kit - Digital Companion</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div id="screen-1" class="screen">
+        <h1>Curiosity Lab Starter Kit - Digital Companion</h1>
+        <h2>Chapter 01 | The Wonderful World of Science | Class 6 Science</h2>
+        <div class="char-box">
+            <strong>Scientist Kabir:</strong> "Hello, I am Scientist Kabir! I am from Amritsar, Punjab. Science is my favourite adventure - and today, you and I are going to explore the Wonderful World of Science together. Are you ready to be curious?"
+        </div>
+        <p style="margin-bottom: 20px;">Welcome to the game AI Companion for Chapter 01! This digital companion goes with your Curiosity Lab Starter Kit. As you play the 3 kit games, come here to test what you have learned. Answer 15 questions across 3 game modules and earn your badge!</p>
+        
+        <div class="form-group">
+            <label for="student-name">Your Name: <span style="color:red;">*</span></label>
+            <input type="text" id="student-name" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+            <label for="team-name">Your Team Name: (Optional)</label>
+            <input type="text" id="team-name" placeholder="Enter team name">
+        </div>
+        <button onclick="submitWelcomeScreen()">Start the Science Adventure!</button>
+        <div class="ai-disclaimer">"This app uses a rules-based engine, not a live AI model."</div>
+    </div>
+
+    <div id="screen-2" class="screen" style="display:none;">
+        <h1>Your Science Journey</h1>
+        <h2>Dashboard</h2>
+        
+        <div class="progress-container">
+            <div id="progress-bar" class="progress-bar"></div>
+            <div id="progress-text" class="progress-text">0 / 15 questions answered</div>
+        </div>
+
+        <table class="map-table">
+            <thead>
+                <tr>
+                    <th>Module</th>
+                    <th>Game</th>
+                    <th>Questions</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Module 1</td>
+                    <td>Mystery Object Detective</td>
+                    <td>Q1-5</td>
+                    <td id="status-m1" style="color: var(--orange); font-weight: bold;">Pending</td>
+                </tr>
+                <tr>
+                    <td>Module 2</td>
+                    <td>LED Circuit Challenge</td>
+                    <td>Q6-10</td>
+                    <td id="status-m2" style="color: var(--orange); font-weight: bold;">Pending</td>
+                </tr>
+                <tr>
+                    <td>Module 3</td>
+                    <td>Scientific Method Race</td>
+                    <td>Q11-15</td>
+                    <td id="status-m3" style="color: var(--orange); font-weight: bold;">Pending</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p style="margin-bottom: 20px; font-style: italic;">Play a kit game first, then return here to answer the questions for that module. You can complete the modules in any order!</p>
+        
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <button class="btn-secondary" onclick="goToModule(1)">Play Module 1 - Mystery Object Detective</button>
+            <button class="btn-secondary" onclick="goToModule(2)">Play Module 2 - LED Circuit Challenge</button>
+            <button class="btn-secondary" onclick="goToModule(3)">Play Module 3 - Scientific Method Race</button>
+            <button id="results-btn" onclick="showResultsScreen()" disabled style="background: var(--navy);">See My Results!</button>
+        </div>
+        <div class="ai-disclaimer">"This app uses a rules-based engine, not a live AI model."</div>
+    </div>
+
+    <div id="screen-3" class="screen" style="display:none;">
+        <h1>Module 1 - Mystery Object Detective</h1>
+        <h2>Questions 1-5</h2>
+        <p style="margin-bottom: 15px;"><em>Before answering, play Game 1 with your kit! Feel the mystery bags. Write your observations and hypotheses on the Recording Sheet. Then come back and answer these questions.</em></p>
+        
+        <div class="reminder-box reminder-teal">
+            <strong>Game 1 Reminder:</strong> In the Mystery Object Detective game, you used your senses (touch, smell, hearing) to observe objects WITHOUT looking. This is exactly how scientists gather data - carefully observing before forming any conclusions.
+        </div>
+
+        <div id="quiz-container-m1"></div>
+        <button onclick="saveModuleProgress(1)">Back to Module Map</button>
+        <div class="ai-disclaimer">"This app uses a rules-based engine, not a live AI model."</div>
+    </div>
+
+    <div id="screen-4" class="screen" style="display:none;">
+        <h1>Module 2 - LED Circuit Challenge</h1>
+        <h2>Questions 6-10</h2>
+        <p style="margin-bottom: 15px;"><em>Before answering, complete Game 2 with your kit! Build the CR2032 + LED circuit using copper tape. Record your hypothesis BEFORE connecting, then test it.</em></p>
+        
+        <div class="reminder-box reminder-orange">
+            <strong>LED Circuit Reminder:</strong>
+            <div class="circuit-code">CR2032 Coin Cell (3V)
+FLAT FACE = (+) positive
+RIM EDGE  = (-) negative
+
+Copper tape (+) --> [LONG LEG] LED [SHORT LEG] <-- Copper tape (-)
+
+Result: LED GLOWS = Hypothesis CONFIRMED!</div>
+            Remember: LONGER leg of LED = positive (+). SHORTER leg = negative (-). CR2032 is 3V and completely safe. Reverse polarity will NOT damage the LED - it simply will not light.
+        </div>
+
+        <div id="quiz-container-m2"></div>
+        <button onclick="saveModuleProgress(2)">Back to Module Map</button>
+        <div class="ai-disclaimer">"This app uses a rules-based engine, not a live AI model."</div>
+    </div>
+
+    <div id="screen-5" class="screen" style="display:none;">
+        <h1>Module 3 - Scientific Method Race</h1>
+        <h2>Questions 11-15</h2>
+        <p style="margin-bottom: 15px;"><em>Before answering, play Game 3 with your kit! Race your team to sequence the 5 steps of the scientific method correctly on the Investigation Board.</em></p>
+        
+        <div class="reminder-box reminder-navy">
+            <strong>Game 3 Reminder:</strong> In the Scientific Method Race, you placed all 5 steps in the correct order as fast as possible. The 5 steps are:<br>
+            <strong>1. Observe | 2. Question | 3. Hypothesize | 4. Test | 5. Analyse</strong><br>
+            Science is collaborative - teams raced together, just like real scientists work together!
+        </div>
+
+        <div id="quiz-container-m3"></div>
+        <div style="display:flex; gap:10px;">
+            <button onclick="saveModuleProgress(3)">Back to Module Map</button>
+            <button id="m3-results-nav-btn" class="btn-secondary" onclick="saveModuleProgress(3, true)" style="display:none;">See My Results!</button>
+        </div>
+        <div class="ai-disclaimer">"This app uses a rules-based engine, not a live AI model."</div>
+    </div>
+
+    <div id="screen-6" class="screen" style="display:none;">
+        <h1>Your Science Results!</h1>
+        <div style="text-align: center;">
+            <div class="total-score-big" id="final-score-display">Total Score: 0 / 15</div>
+        </div>
+
+        <div class="badge-display">
+            <div class="badge-emoji" id="badge-emoji">🔬</div>
+            <h3 id="badge-name">Lab Discoverer</h3>
+            <p id="badge-desc">Loading summary...</p>
+        </div>
+
+        <table class="map-table">
+            <thead>
+                <tr><th>Module</th><th>Game</th><th>Your Score</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Module 1</td><td>Mystery Object Detective</td><td id="breakdown-m1">0/5</td></tr>
+                <tr><td>Module 2</td><td>LED Circuit Challenge</td><td id="breakdown-m2">0/5</td></tr>
+                <tr><td>Module 3</td><td>Scientific Method Race</td><td id="breakdown-m3">0/5</td></tr>
+                <tr style="font-weight:bold; background:var(--teal-l);"><td>Total</td><td></td><td id="breakdown-total">0/15</td></tr>
+            </tbody>
+        </table>
+
+        <div class="form-group" style="margin-top:20px;">
+            <label>Write your Science Pledge below:</label>
+            <p style="font-style:italic; margin-bottom: 5px; color: var(--gray);">"I, <span id="pledge-name-placeholder">[Name]</span>, promise to always be curious, always ask WHY, and always test my ideas before calling them facts!"</p>
+            <textarea id="custom-pledge" placeholder="Type your personalized commitment to science here..."></textarea>
+            <button style="margin-top:10px;" onclick="savePledge()">Save Pledge</button>
+        </div>
+
+        <div class="char-box" style="margin-top:20px;">
+            <strong>Scientist Kabir:</strong> "Remember - science is a giant, unending jigsaw puzzle. You have added some pieces today. Keep asking WHY. Keep observing. Keep being curious. The Wonderful World of Science is waiting for you!"
+        </div>
+
+        <a href="#" class="hidden-link" onclick="openTeacherDashboard(event)">Teacher View</a>
+        <div class="ai-disclaimer">"This app uses a rules-based engine, not a live AI model."</div>
+    </div>
+
+    <div id="screen-7" class="screen" style="display:none;">
+        <h1>Teacher Dashboard</h1>
+        <h2>Chapter 01 Results Summary</h2>
+        
+        <table class="map-table" style="margin-top:20px;">
+            <tr><td><strong>Student Name:</strong></td><td id="td-name">-</td></tr>
+            <tr><td><strong>Team Name:</strong></td><td id="td-team">-</td></tr>
+            <tr><td><strong>Date Completed:</strong></td><td id="td-date">-</td></tr>
+            <tr><td><strong>Final Score / Badge:</strong></td><td><span id="td-score">0/15</span> | <strong id="td-badge">-</strong></td></tr>
+            <tr><td><strong>Module 1 Score:</strong></td><td id="td-m1">0/5</td></tr>
+            <tr><td><strong>Module 2 Score:</strong></td><td id="td-m2">0/5</td></tr>
+            <tr><td><strong>Module 3 Score:</strong></td><td id="td-m3">0/5</td></tr>
+            <tr><td><strong>Science Pledge Text:</strong></td><td id="td-pledge" style="font-style:italic;">-</td></tr>
+        </table>
+
+        <h3>Suggested Follow-up Actions</h3>
+        <table class="map-table">
+            <thead>
+                <tr><th>Badge Level</th><th>Suggested Action</th></tr>
+            </thead>
+            <tbody>
+                <tr id="row-action-champion"><td><strong>Curiosity Champion</strong></td><td>Extend: Ask student to design their own experiment for homework</td></tr>
+                <tr id="row-action-explorer"><td><strong>Science Explorer</strong></td><td>Consolidate: Review the 5 steps of scientific method together</td></tr>
+                <tr id="row-action-discoverer"><td><strong>Lab Discoverer</strong></td><td>Support: Re-do LED circuit with direct teacher guidance; revisit step sequence</td></tr>
+            </tbody>
+        </table>
+
+        <div style="display:flex; gap:10px; margin-top:20px;">
+            <button onclick="window.print()">Print This Summary</button>
+            <button class="btn-secondary" onclick="navigateTo('screen-2')">Back to App</button>
+        </div>
+        <div class="ai-disclaimer">"This app uses a rules-based engine, not a live AI model."</div>
+    </div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
