@@ -51,9 +51,22 @@ function renderQuizzes() {
     }
 }
 
+// 1. ANIMATION 1: Updated NavigateTo Router Function with Smooth 10ms Delay Trigger
 function navigateTo(screenId) {
-    document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
-    document.getElementById(screenId).style.display = 'block';
+    // Sabhi screens ko hide karo aur unse active animation class hatao
+    document.querySelectorAll('.screen').forEach(s => {
+        s.style.display = 'none';
+        s.classList.remove('screen-active');
+    });
+    
+    // Target screen ko dhoodho
+    const targetScreen = document.getElementById(screenId);
+    
+    // Pehle display block karo, fir halka sa delay dekar animation class jodo
+    targetScreen.style.display = 'block';
+    setTimeout(() => {
+        targetScreen.classList.add('screen-active');
+    }, 10); // 10ms ka chota delay animation ko smoothly trigger karta hai
 }
 
 function submitWelcomeScreen() {
@@ -90,18 +103,26 @@ function checkAnswer(qId, selectedIdx, btnElement) {
         btnElement.classList.add('selected-correct');
         feed.className = "feedback correct";
         feed.innerText = `Correct! Green Checkmark (✓) - ${qObj.explanation}`;
-        feed.style.display = "block";
-        state[`m${qObj.mod}_score`]++;
     } else {
         btnElement.classList.add('selected-wrong');
         Array.from(grid.children)[qObj.correct].classList.add('selected-correct');
         feed.className = "feedback wrong";
         feed.innerText = `Give it another look! Hint: ${qObj.hint}`;
-        feed.style.display = "block";
+    }
+    
+    // ANIMATION 4: Dynamic Feedback Flash (Triggers scale pop-up)
+    feed.classList.remove('feedback-active');
+    setTimeout(() => {
+        feed.classList.add('feedback-active');
+    }, 5);
+    
+    if(selectedIdx === qObj.correct) {
+        state[`m${qObj.mod}_score`]++;
     }
     updateProgressBar();
 }
 
+// ANIMATION 2: Progress Bar Smooth Glide Layout Sync
 function updateProgressBar() {
     const totalAnswered = document.querySelectorAll('.option-btn.selected-correct, .option-btn.selected-wrong').length;
     const pct = (totalAnswered / 15) * 100;
@@ -170,7 +191,12 @@ function showResultsScreen() {
     localStorage.setItem('game_01_completed_date', state.completed_date);
 
     document.getElementById('final-score-display').innerText = `Total Score: ${state.total_score} / 15`;
-    document.getElementById('badge-emoji').innerText = emoji;
+    
+    // ANIMATION 5: Final Badge Celebration Effect (Trophy Bounce Class Injection)
+    const emojiElement = document.getElementById('badge-emoji');
+    emojiElement.innerText = emoji;
+    emojiElement.classList.add('badge-emoji-active');
+    
     document.getElementById('badge-name').innerText = badge;
     document.getElementById('badge-desc').innerText = desc;
     
@@ -205,19 +231,31 @@ function openTeacherDashboard(e) {
     document.getElementById('td-m3').innerText = `${localStorage.getItem('game_01_m3_score') || state.m3_score} / 5`;
     document.getElementById('td-pledge').innerText = localStorage.getItem('game_01_pledge') || state.pledge || 'No custom pledge filled.';
 
-    document.getElementById('row-action-champion').style.background = "none";
-    document.getElementById('row-action-explorer').style.background = "none";
-    document.getElementById('row-action-discoverer').style.background = "none";
+    const rChampion = document.getElementById('row-action-champion');
+    const rExplorer = document.getElementById('row-action-explorer');
+    const rDiscoverer = document.getElementById('row-action-discoverer');
 
+    rChampion.style.background = "none";
+    rExplorer.style.background = "none";
+    rDiscoverer.style.background = "none";
+
+    // ANIMATION 6: Teacher Dashboard Highlight Matrix (Color Glow Fade-in dynamic transition)
     if(bLevel === "Curiosity Champion") {
-        document.getElementById('row-action-champion').style.background = "var(--teal-l)";
+        rChampion.style.background = "var(--teal-l)";
     } else if(bLevel === "Science Explorer") {
-        document.getElementById('row-action-explorer').style.background = "var(--blue-l)";
+        rExplorer.style.background = "var(--blue-l)";
     } else {
-        document.getElementById('row-action-discoverer').style.background = "var(--orange-l)";
+        rDiscoverer.style.background = "var(--orange-l)";
     }
 
     navigateTo('screen-7');
+}
+
+// Naya dynamic thread micro-delay utility print trigger problem ko solve karne ke liye
+function triggerPrint() {
+    setTimeout(() => {
+        window.print();
+    }, 100);
 }
 
 renderQuizzes();

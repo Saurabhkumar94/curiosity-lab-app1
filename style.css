@@ -45,30 +45,98 @@ button:disabled { background: #ccc; cursor: not-allowed; }
 .btn-secondary:hover { background: #0D47A1; }
 
 .map-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-.map-table th, .map-table td { border: 1px solid #E0E0E0; padding: 12px; text-align: left; }
+.map-table th, .map-table td { border: 1px solid #E0E0E0; padding: 12px; text-align: left; transition: background 0.5s ease; }
 .map-table th { background: var(--navy); color: white; }
+
 .progress-container { background: #E0E0E0; border-radius: 10px; height: 20px; margin-bottom: 25px; overflow: hidden; position: relative; }
-.progress-bar { background: linear-gradient(90deg, var(--teal), var(--blue)); height: 100%; width: 0%; transition: width 0.3s; }
+
+/* 2. Progress Bar Smooth Slide Animation (Cubic-Bezier Included) */
+.progress-bar {
+    background: linear-gradient(90deg, var(--teal), var(--blue));
+    height: 100%;
+    width: 0%;
+    /* transition lagane se bar jhatke se nahi, smoothly slide hokar badhega */
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+
 .progress-text { position: absolute; width: 100%; text-align: center; font-size: 0.85rem; font-weight: bold; line-height: 20px; color: black; }
 
 .qa-block { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px dashed #E0E0E0; }
 .options-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 10px; }
-.option-btn { background: #F0F2F5; color: var(--text); text-align: left; padding: 10px 15px; border: 1px solid #DADCE0; border-radius: 6px; cursor: pointer; font-size: 0.95rem; }
+
+/* 3. Option Button Click Pop/Pulse Effect Foundation */
+.option-btn { 
+    background: #F0F2F5; 
+    color: var(--text); 
+    text-align: left; 
+    padding: 10px 15px; 
+    border: 1px solid #DADCE0; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    font-size: 0.95rem; 
+    transition: all 0.2s ease;
+}
 .option-btn:hover { background: #E4E6E9; }
+
+/* Active press state for smooth click response */
+.option-btn:active {
+    transform: scale(0.95); /* Click karne par button soft touch click effect dega */
+}
+
 .option-btn.selected-correct { background: #C8E6C9 !important; border-color: var(--success); color: #1B5E20; font-weight: bold; }
 .option-btn.selected-wrong { background: #FFCDD2 !important; border-color: var(--error); color: #B71C1C; }
+
+/* 4. Dynamic Feedback Flash (Pop-up Scale Animation) */
+@keyframes feedbackPop {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
 .feedback { margin-top: 8px; font-weight: bold; font-size: 0.9rem; display: none; }
+.feedback-active {
+    display: block !important;
+    animation: feedbackPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
 .feedback.correct { color: var(--success); }
 .feedback.wrong { color: var(--error); }
 
 .badge-display { text-align: center; padding: 20px; margin: 20px 0; border-radius: 8px; background: #FFFDE7; border: 2px dashed var(--orange); }
-.badge-emoji { font-size: 3.5rem; margin-bottom: 10px; }
+
+/* 5. Final Badge Celebration Effect (Trophy Bounce/Pulse Loop) */
+@keyframes trophyCelebration {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.2) translateY(-10px); }
+    50% { transform: scale(1) translateY(0); }
+    100% { transform: scale(1); }
+}
+.badge-emoji { font-size: 3.5rem; margin-bottom: 10px; display: inline-block; }
+.badge-emoji-active {
+    animation: trophyCelebration 1.2s ease infinite;
+}
+
 .total-score-big { font-size: 2.5rem; font-weight: bold; color: var(--navy); margin: 10px 0; }
 
 .ai-disclaimer { margin-top: 25px; font-size: 0.8rem; color: var(--gray); font-style: italic; text-align: center; padding-top: 15px; border-top: 1px solid #E0E0E0; }
 
 .hidden-link { display: block; text-align: center; margin-top: 20px; font-size: 0.85rem; color: #999; text-decoration: none; }
 .hidden-link:hover { text-decoration: underline; }
+
+/* 1. Screen Fade-in Animation Rule */
+@keyframes fadeInEffect {
+    from { 
+        opacity: 0; 
+        transform: translateY(10px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+/* Jab screen active hogi tab ye animation chalega */
+.screen-active {
+    display: block !important;
+    animation: fadeInEffect 0.4s ease-out forwards;
+}
 
 @media print {
     body { background: white; color: black; }
