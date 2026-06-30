@@ -51,7 +51,7 @@ function renderQuizzes() {
     }
 }
 
-// 1. ANIMATION 1: Updated NavigateTo Router Function with Smooth 10ms Delay Trigger
+// 1.// ANIMATION 1: Updated NavigateTo router function with a smooth 10ms delay trigger.
 function navigateTo(screenId) {
     // Sabhi screens ko hide karo aur unse active animation class hatao
     document.querySelectorAll('.screen').forEach(s => {
@@ -59,14 +59,14 @@ function navigateTo(screenId) {
         s.classList.remove('screen-active');
     });
     
-    // Target screen ko dhoodho
+    // Find the target screen.
     const targetScreen = document.getElementById(screenId);
     
-    // Pehle display block karo, fir halka sa delay dekar animation class jodo
+   // Set display to block first, then add the animation class after a short delay.
     targetScreen.style.display = 'block';
     setTimeout(() => {
         targetScreen.classList.add('screen-active');
-    }, 10); // 10ms ka chota delay animation ko smoothly trigger karta hai
+    }, 10); // A 10ms delay triggers the animation smoothly.
 }
 
 function submitWelcomeScreen() {
@@ -239,7 +239,7 @@ function openTeacherDashboard(e) {
     rExplorer.style.background = "none";
     rDiscoverer.style.background = "none";
 
-    // ANIMATION 6: Teacher Dashboard Highlight Matrix (Color Glow Fade-in dynamic transition)
+    // ANIMATION 6: Teacher Dashboard Highlight Matrix (Dynamic color glow fade-in transition)
     if(bLevel === "Curiosity Champion") {
         rChampion.style.background = "var(--teal-l)";
     } else if(bLevel === "Science Explorer") {
@@ -251,7 +251,7 @@ function openTeacherDashboard(e) {
     navigateTo('screen-7');
 }
 
-// Naya dynamic thread micro-delay utility print trigger problem ko solve karne ke liye
+// New dynamic thread micro-delay utility to resolve the print trigger issue.
 function triggerPrint() {
     setTimeout(() => {
         window.print();
